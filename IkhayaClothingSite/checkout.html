@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+      .hidden {
+    display: none;
+}
+
+.checkout-form {
+    margin-top: 20px;
+    border-top: 1px solid #ccc;
+    padding-top: 20px;
+}
+
+.checkout-form div {
+    margin-bottom: 10px;
+}
+
+.checkout-form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+
+.hidden {
+    display: none;
+}
+
+#notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border-radius: 5px;
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+}
+
+#notification.show {
+    display: block;
+}
+
+    </style>
+</head>
+<body>
+     <div class="product">
+        <h2>Product Name</h2>
+        <p>Price: $10.00</p>
+        <button class="add-to-cart" data-name="Product Name" data-price="10">Add to Cart</button>
+    </div>
+    <div class="cart">
+        <h2>Shopping Cart</h2>
+        <ul class="cart-items"></ul>
+        <p>Total: $<span class="cart-total">0.00</span></p>
+        <button class="checkout">Checkout</button>
+    </div>
+
+    <div class="checkout-form hidden">
+        <h2>Checkout</h2>
+        <form id="checkoutForm">
+            <div>
+                <label for="shipping-name">Name:</label>
+                <input type="text" id="shipping-name" name="name" required>
+            </div>
+            <div>
+                <label for="shipping-address">Address:</label>
+                <input type="text" id="shipping-address" name="address" required>
+            </div>
+            <div>
+                <label for="shipping-city">City:</label>
+                <input type="text" id="shipping-city" name="city" required>
+            </div>
+            <div>
+                <label for="shipping-zip">ZIP Code:</label>
+                <input type="text" id="shipping-zip" name="zip" required>
+            </div>
+            <div>
+                <label for="payment-card">Card Number:</label>
+                <input type="text" id="payment-card" name="card" required>
+            </div>
+            <div>
+                <label for="payment-expiry">Expiry Date:</label>
+                <input type="text" id="payment-expiry" name="expiry" required>
+            </div>
+            <div>
+                <label for="payment-cvv">CVV:</label>
+                <input type="text" id="payment-cvv" name="cvv" required>
+            </div>
+            <button type="submit">Place Order</button>
+        </form>
+    </div> 
+
+    div class="product">
+        <h2>Product Name</h2>
+        <p>Price: $10.00</p>
+        <button class="add-to-cart" data-name="Product Name" data-price="10">Add to Cart</button>
+    </div>
+    <div class="cart">
+        <h2>Shopping Cart</h2>
+        <ul class="cart-items"></ul>
+        <p>Total: $<span class="cart-total">0.00</span></p>
+        <button class="checkout">Checkout</button>
+    </div>
+
+    <div class="checkout-form hidden">
+        <h2>Checkout</h2>
+        <form id="checkoutForm">
+            <!-- Form fields as before -->
+            <button type="submit">Place Order</button>
+        </form>
+    </div>
+
+    <div id="notification" class="hidden"></div>
+
+    <script src="scripts.js"></script>
+    <!-- <script>
+      document.addEventListener('DOMContentLoaded', () => {
+    const cartItems = [];
+    const cartItemsContainer = document.querySelector('.cart-items');
+    const cartTotalElement = document.querySelector('.cart-total');
+    const checkoutButton = document.querySelector('.checkout');
+    const checkoutForm = document.querySelector('.checkout-form');
+    const checkoutFormElement = document.getElementById('checkoutForm');
+
+    function updateCart() {
+        cartItemsContainer.innerHTML = '';
+        let total = 0;
+        cartItems.forEach((item, index) => {
+            const li = document.createElement('li');
+            li.className = 'cart-item';
+            li.innerHTML = `
+                ${item.name} - $${item.price.toFixed(2)} x 
+                <input type="number" min="1" value="${item.quantity}" data-index="${index}">
+                <button class="remove-item" data-index="${index}">Remove</button>
+            `;
+            cartItemsContainer.appendChild(li);
+            total += item.price * item.quantity;
+        });
+        cartTotalElement.textContent = total.toFixed(2);
+    }
+
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+        button.addEventListener('click', (event) => {
+            const name = event.target.getAttribute('data-name');
+            const price = parseFloat(event.target.getAttribute('data-price'));
+            const existingItem = cartItems.find(item => item.name === name);
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cartItems.push({ name, price, quantity: 1 });
+            }
+
+            updateCart();
+        });
+    });
+
+    cartItemsContainer.addEventListener('input', (event) => {
+        if (event.target.type === 'number') {
+            const index = event.target.getAttribute('data-index');
+            cartItems[index].quantity = parseInt(event.target.value);
+            updateCart();
+        }
+    });
+
+    cartItemsContainer.addEventListener('click', (event) => {
+        if (event.target.classList.contains('remove-item')) {
+            const index = event.target.getAttribute('data-index');
+            cartItems.splice(index, 1);
+            updateCart();
+        }
+    });
+
+    checkoutButton.addEventListener('click', () => {
+        checkoutForm.classList.remove('hidden');
+    });
+
+    checkoutFormElement.addEventListener('submit', (event) => {
+        event.preventDefault();
+        // Here you would typically send the form data to your server for processing
+        alert('Order placed successfully!');
+    });
+});
+
+    </script> -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+    const cartItems = [];
+    const cartItemsContainer = document.querySelector('.cart-items');
+    const cartTotalElement = document.querySelector('.cart-total');
+    const checkoutButton = document.querySelector('.checkout');
+    const checkoutForm = document.querySelector('.checkout-form');
+    const checkoutFormElement = document.getElementById('checkoutForm');
+    const notificationElement = document.getElementById('notification');
+
+    function updateCart() {
+        cartItemsContainer.innerHTML = '';
+        let total = 0;
+        cartItems.forEach((item, index) => {
+            const li = document.createElement('li');
+            li.className = 'cart-item';
+            li.innerHTML = `
+                ${item.name} - $${item.price.toFixed(2)} x 
+                <input type="number" min="1" value="${item.quantity}" data-index="${index}">
+                <button class="remove-item" data-index="${index}">Remove</button>
+            `;
+            cartItemsContainer.appendChild(li);
+            total += item.price * item.quantity;
+        });
+        cartTotalElement.textContent = total.toFixed(2);
+    }
+
+    function showNotification(message) {
+        notificationElement.textContent = message;
+        notificationElement.classList.add('show');
+        setTimeout(() => {
+            notificationElement.classList.remove('show');
+        }, 3000);
+    }
+
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+        button.addEventListener('click', (event) => {
+            const name = event.target.getAttribute('data-name');
+            const price = parseFloat(event.target.getAttribute('data-price'));
+            const existingItem = cartItems.find(item => item.name === name);
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cartItems.push({ name, price, quantity: 1 });
+            }
+
+            updateCart();
+            showNotification(`${name} has been added to your cart.`);
+        });
+    });
+
+    cartItemsContainer.addEventListener('input', (event) => {
+        if (event.target.type === 'number') {
+            const index = event.target.getAttribute('data-index');
+            cartItems[index].quantity = parseInt(event.target.value);
+            updateCart();
+            showNotification(`Cart updated.`);
+        }
+    });
+
+    cartItemsContainer.addEventListener('click', (event) => {
+        if (event.target.classList.contains('remove-item')) {
+            const index = event.target.getAttribute('data-index');
+            const removedItem = cartItems.splice(index, 1);
+            updateCart();
+            showNotification(`${removedItem[0].name} has been removed from your cart.`);
+        }
+    });
+
+    checkoutButton.addEventListener('click', () => {
+        checkoutForm.classList.remove('hidden');
+    });
+
+    checkoutFormElement.addEventListener('submit', (event) => {
+        event.preventDefault();
+        // Here you would typically send the form data to your server for processing
+        alert('Order placed successfully!');
+        showNotification('Your order has been placed successfully!');
+    });
+});
+
+    </script>
+  </body>
+</html>
